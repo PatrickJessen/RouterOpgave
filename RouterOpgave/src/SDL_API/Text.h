@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include "SDL.h"
+#include "../core/Vector.h"
+#include "SDL_ttf.h"
+#include "Renderer.h"
 
 class SingleLetterText
 {
@@ -13,6 +16,11 @@ public:
 class Text
 {
 public:
+	static void Init();
 	std::string Text;
-	SDL_Color Color;
+	SDL_Color color;
+
+	void DrawText(std::string text, Rect rect, Color color);
+
+private:
 };

@@ -128,6 +128,7 @@ public:
     static bool KeyState(Key key);
     static bool KeyPressed(Key key);
     static bool KeyReleased(Key key);
+    static char GetKeyPressed();
 
 public:
     static bool AnyMousePressed();

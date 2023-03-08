@@ -7,7 +7,7 @@
 class Textbox
 {
 public:
-	Textbox(SDL_Rect rect, uint32_t textSize);
+	Textbox(const std::string& fontType, SDL_Rect rect, uint32_t textSize);
 	~Textbox();
 
 public:

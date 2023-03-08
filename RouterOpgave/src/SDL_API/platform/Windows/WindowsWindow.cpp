@@ -57,6 +57,7 @@ void WindowsWindow::Init(const WindowProps& props)
 		SDL_Color color = { 44, 40, 42, 255 };
 		Renderer::SetClearColor(color);
 		SDL_SetWindowResizable(window, SDL_TRUE);
+		TTF_Init();
 	}
 	Input.Update();
 }

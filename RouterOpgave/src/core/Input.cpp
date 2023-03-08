@@ -96,6 +96,17 @@ bool Input::KeyReleased(Key key)
 	return S_InputReleased(S_AnyKeyState, s_keyReleasedMap, (uint8_t)key);
 }
 
+char Input::GetKeyPressed()
+{
+	for (int i = 0; i < 255; i++)
+		if (KeyState((Key)i) && isdigit((char)i+93))
+			return i + 93;
+
+	for (int i = 0; i < 255; i++)
+		if (KeyState((Key)i))
+			return i + 19;
+}
+
 int32_t Input::MouseX()
 {
 	return s_xMouse;

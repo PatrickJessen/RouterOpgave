@@ -11,6 +11,7 @@ public:
 
 public:
 	Router* GetRouter() { return router; }
+	void OpenCommunication(const std::string& comPort);
 	void CommunicateThroughPort(const std::string& command, std::string& response);
 private:
 	void OnPortClick();

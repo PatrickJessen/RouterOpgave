@@ -8,6 +8,8 @@ public:
 	static SDL_Renderer* GetRenderer();
 	static void SetBlendMode(SDL_BlendMode blendMode);
 	static void SetColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+	static void SetColor(SDL_Color color);
+	static void SetDefaultColor();
 	static void SetClearColor(SDL_Color color);
 	static void SetAlphaColor(Uint8 a);
 	static SDL_Color GetClearColor();

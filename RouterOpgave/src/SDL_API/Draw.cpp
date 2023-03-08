@@ -4,7 +4,6 @@
 
 Draw::Draw()
 {
-	TTF_Init();
 }
 
 void Draw::DrawRouter(Router* router)
@@ -15,18 +14,31 @@ void Draw::DrawRouter(Router* router)
 	Renderer::SetColor(255, 0, 0, 255);
 	SDL_RenderDrawRect(Renderer::GetRenderer(), &rect);
 
-	DrawPorts(router);
+	//DrawPorts(router);
+	DrawPowerLight(router);
 }
 
 void Draw::DrawTextbox(Textbox* textbox)
 {
-	SDL_RenderDrawRect(Renderer::GetRenderer(), &textbox->GetRect());
-	SDL_Surface* surface = TTF_RenderText_Blended(textbox->GetFont(), textbox->GetText().Text.c_str(), textbox->GetText().Color);
+	SDL_Rect rect = textbox->GetRect();
+	SDL_RenderDrawRect(Renderer::GetRenderer(), &rect);
+	DrawText(textbox);
+}
+
+void Draw::DrawText(Textbox* textbox)
+{
+	SDL_Rect rect = textbox->GetRect();
+	SDL_Surface* surface = TTF_RenderText_Blended(textbox->GetFont(), textbox->GetText().Text.c_str(), textbox->GetText().color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetRenderer(), surface);
 	SDL_SetTextureScaleMode(texture, SDL_ScaleMode::SDL_ScaleModeBest);
-	SDL_RenderCopy(Renderer::GetRenderer(), texture, NULL, &textbox->GetRect());
+	SDL_RenderCopy(Renderer::GetRenderer(), texture, NULL, &rect);
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
+}
+
+void Draw::DrawCombobox(Combobox<std::string*>* combobox)
+{
+	combobox->Draw();
 }
 
 void Draw::DrawPorts(Router* router)
@@ -35,4 +47,16 @@ void Draw::DrawPorts(Router* router)
 		SDL_Rect rect = { router->GetPorts()[i]->GetRect().X, router->GetPorts()[i]->GetRect().Y, router->GetPorts()[i]->GetRect().W, router->GetPorts()[i]->GetRect().H };
 		SDL_RenderDrawRect(Renderer::GetRenderer(), &rect);
 	}
+}
+
+void Draw::DrawPowerLight(Router* router)
+{
+	SDL_Color color = { 255, 0, 0, 255 };
+	if (router->GetPower()) {
+		color = { 0, 255, 0, 255 };
+	}
+	SDL_Rect rect = { 98, 116, 15, 15 };
+	Renderer::SetColor(color);
+	SDL_RenderFillRect(Renderer::GetRenderer(), &rect);
+	Renderer::SetDefaultColor();
 }

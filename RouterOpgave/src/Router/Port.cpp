@@ -7,4 +7,5 @@ Port::Port(PortType type, Rect rect, const std::string& comPort)
 
 void Port::Communicate(const std::string msg, std::string& response)
 {
+	
 }

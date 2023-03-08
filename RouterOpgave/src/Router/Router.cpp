@@ -1,15 +1,53 @@
 #include "Router.h"
 
+
 Router::Router(const std::string& router, Rect rect, int portAmount)
 	: routerPath(router), routerRect(rect), portAmount(portAmount)
 {
 	InitializePorts();
+	t = std::thread(&Router::IsCommunicationOpen, this);
 }
 
 Router::~Router()
 {
 	for (int i = 0; i < portAmount; i++) {
 		delete ports[i];
+	}
+	t.join();
+}
+
+void Router::Connect(const std::string& comPort)
+{
+	serialConnector.Open(comPort);
+}
+
+void Router::Close()
+{
+	serialConnector.Close();
+}
+
+void Router::IsCommunicationOpen()
+{
+	while (true)
+	{
+		if (serialConnector.IsOpen()) {
+			power = true;
+		}
+		else {
+			power = false;
+		}
+	}
+}
+
+void Router::Communicate(const std::string& message, std::string& response)
+{
+	try
+	{
+		serialConnector.Communicate(message, response);
+	}
+	catch (std::exception e)
+	{
+		response = e.what();
 	}
 }
 

@@ -15,11 +15,18 @@ RouterManager::~RouterManager()
 	delete activePort;
 }
 
+void RouterManager::OpenCommunication(const std::string& comPort)
+{
+	// check if we're already connected
+	if (router->GetPower()) {
+		router->Close();
+	}
+	router->Connect(comPort);
+}
+
 void RouterManager::CommunicateThroughPort(const std::string& command, std::string& response)
 {
-	if (activePort != nullptr) {
-		activePort->Communicate(command, response);
-	}
+	router->Communicate(command, response);
 }
 
 void RouterManager::OnPortClick()

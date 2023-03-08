@@ -8,3 +8,12 @@ public:
 	int W;
 	int H;
 };
+
+struct Color
+{
+public:
+	int R;
+	int G;
+	int B;
+	int A;
+};

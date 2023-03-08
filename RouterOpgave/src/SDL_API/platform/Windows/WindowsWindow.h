@@ -2,6 +2,7 @@
 #define SDL_MAIN_HANDLED
 #include "../../../core/Window.h"
 #include "SDL.h"
+#include "SDL_ttf.h"
 
 class WindowsWindow : public Window
 {

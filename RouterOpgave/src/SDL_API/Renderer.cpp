@@ -28,6 +28,16 @@ void Renderer::SetColor(unsigned int r, unsigned int g, unsigned int b, unsigned
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
+void Renderer::SetColor(SDL_Color color)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+}
+
+void Renderer::SetDefaultColor()
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+}
+
 void Renderer::SetClearColor(SDL_Color color)
 {
 	ClearColor = { color.r, color.g, color.b, color.a };
