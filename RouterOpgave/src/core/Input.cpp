@@ -98,13 +98,7 @@ bool Input::KeyReleased(Key key)
 
 char Input::GetKeyPressed()
 {
-	for (int i = 0; i < 255; i++)
-		if (KeyState((Key)i) && isdigit((char)i+93))
-			return i + 93;
-
-	for (int i = 0; i < 255; i++)
-		if (KeyState((Key)i))
-			return i + 19;
+	return event.key.keysym.sym;
 }
 
 int32_t Input::MouseX()

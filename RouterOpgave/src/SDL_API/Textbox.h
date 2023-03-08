@@ -1,8 +1,8 @@
 #pragma once
-#include <thread>
 #include "Text.h"
 #include "Renderer.h"
 #include "SDL_ttf.h"
+#include <vector>
 
 class Textbox
 {
@@ -12,17 +12,19 @@ public:
 
 public:
 	void Write();
-	const Text& GetText() { return text; }
+	const std::vector<SingleLetterText>& GetText() { return text; }
 	TTF_Font* GetFont() { return font; }
 	SDL_Rect GetRect() { return rect; }
-
+	const std::string& GetTextAsString();
 private:
 	void OnClick();
+	void OnBackSpace();
+	void OnPaste();
 private:
-	Text text = {};
+	std::vector<SingleLetterText> text = {};
 	SDL_Rect rect = {};
 	uint32_t textSize = 0;
 	TTF_Font* font;
 	bool inFocus = false;
-	std::thread onclickThread;
+	int margin = 0;
 };

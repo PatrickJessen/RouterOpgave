@@ -27,13 +27,15 @@ void Draw::DrawTextbox(Textbox* textbox)
 
 void Draw::DrawText(Textbox* textbox)
 {
-	SDL_Rect rect = textbox->GetRect();
-	SDL_Surface* surface = TTF_RenderText_Blended(textbox->GetFont(), textbox->GetText().Text.c_str(), textbox->GetText().color);
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetRenderer(), surface);
-	SDL_SetTextureScaleMode(texture, SDL_ScaleMode::SDL_ScaleModeBest);
-	SDL_RenderCopy(Renderer::GetRenderer(), texture, NULL, &rect);
-	SDL_FreeSurface(surface);
-	SDL_DestroyTexture(texture);
+	for (int i = 0; i < textbox->GetText().size(); i++) {
+
+		SDL_Surface* surface = TTF_RenderText_Blended(textbox->GetFont(), &textbox->GetText()[i].Letter, textbox->GetText()[i].Color);
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::GetRenderer(), surface);
+		SDL_SetTextureScaleMode(texture, SDL_ScaleMode::SDL_ScaleModeBest);
+		SDL_RenderCopy(Renderer::GetRenderer(), texture, NULL, &textbox->GetText()[i].Rect);
+		SDL_FreeSurface(surface);
+		SDL_DestroyTexture(texture);
+	}
 }
 
 void Draw::DrawCombobox(Combobox<std::string*>* combobox)

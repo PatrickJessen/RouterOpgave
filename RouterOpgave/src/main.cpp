@@ -7,7 +7,7 @@ int main()
 	Window* window = WindowsWindow::Create({ "Cisco" });
 	Text::Init();
 	RouterManager* m = new RouterManager();
-	Textbox* textbox = new Textbox("assets/Font/arial.ttf", { 300, 300, 300, 75 }, 60);
+	Textbox* textbox = new Textbox("assets/Font/arialbd.ttf", { 50, 300, 900, 75 }, 100);
 	Combobox<std::string*>* combobox = new Combobox<std::string*>("Com ports", { 1000, 10, 50, 30 }, { 255, 0, 0, 255 });
 	std::string* f;
 	combobox->AddItem("COM1", f);
@@ -29,6 +29,7 @@ int main()
 		if (combobox->OnItemChanged()) {
 			m->OpenCommunication(combobox->GetSelectedItem()->name);
 		}
+		textbox->Write();
 		draw.DrawRouter(m->GetRouter());
 		draw.DrawTextbox(textbox);
 		draw.DrawCombobox(combobox);
