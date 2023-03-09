@@ -26,10 +26,29 @@ int main()
 	Draw draw;
 	while (true)
 	{
+		if (Input::MousePressed(MouseButton::LEFT)) {
+			textbox->OnClick();
+			combobox->SelectItem();
+			combobox->OpenClose();
+		}
 		if (combobox->OnItemChanged()) {
 			m->OpenCommunication(combobox->GetSelectedItem()->name);
 		}
-		textbox->Write();
+		if (Input::KeyPressed(Key::KP_ENTER)) {
+			if (textbox->InFocus()) {
+				std::string text = textbox->GetTextAsString();
+				std::string response = "";
+				m->CommunicateThroughPort(text, response);
+				std::cout << response << std::endl;
+				textbox->Clear();
+			}
+		}
+		if (Input::KeyPressed(Key::BACKSPACE)) {
+			textbox->OnBackSpace();
+		}
+		if (Input::AnyKeyPressed()) {
+			textbox->Write();
+		}
 		draw.DrawRouter(m->GetRouter());
 		draw.DrawTextbox(textbox);
 		draw.DrawCombobox(combobox);

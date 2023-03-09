@@ -10,10 +10,10 @@ template <typename V>
 class Item
 {
 public:
-	Item(V& item, std::string name, Rect vec)
+	Item(V* item, std::string name, Rect vec)
 		: item(item), name(name), vec(vec) {}
 public:
-	V& item = nullptr;
+	V* item = nullptr;
 	std::string name{};
 	Rect vec{};
 };
@@ -47,10 +47,9 @@ public:
 			if (isOpen)
 			{
 				renderText->DrawText(items[i]->name, items[i]->vec, color);
-				SelectItem(i);
 			}
 		}
-		OpenClose();
+		//OpenClose();
 	}
 	const bool& OnItemChanged() { return itemChanged; }
 	Item<T>* GetSelectedItem() { return selectedItem; }
@@ -58,7 +57,7 @@ public:
 	{
 		counter += 40;
 		Rect vec4 = { vec.X, vec.Y + counter, vec.W, vec.H };
-		Item<T>* newItem = new Item<T>(item, name, vec4);
+		Item<T>* newItem = new Item<T>(&item, name, vec4);
 		items.push_back(newItem);
 	}
 
@@ -73,18 +72,20 @@ public:
 	void OpenClose()
 	{
 		if (Collision::InRect(vec, Input::MouseX(), Input::MouseY()))
-			if (Input::MousePressed(MouseButton::LEFT))
-				isOpen = !isOpen;
+			isOpen = !isOpen;
 	}
-	void SelectItem(int i)
+	void SelectItem()
 	{
-		if (Collision::InRect(items[i]->vec, Input::MouseX(), Input::MouseY()))
+		if (isOpen) 
 		{
-			if (Input::MousePressed(MouseButton::LEFT))
+			for (int i = 0; i < items.size(); i++)
 			{
-				selectedItem = items[i];
-				isOpen = false;
-				itemChanged = true;
+				if (Collision::InRect(items[i]->vec, Input::MouseX(), Input::MouseY()))
+				{
+					selectedItem = items[i];
+					isOpen = false;
+					itemChanged = true;
+				}
 			}
 		}
 	}

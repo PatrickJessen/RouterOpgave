@@ -16,24 +16,19 @@ Textbox::~Textbox()
 
 void Textbox::Write()
 {
-	OnClick();
-	//OnPaste();
-	OnBackSpace();
 	if (inFocus) {
 		
-		if (Input::AnyKeyPressed()) {
-			char ch = Input::GetKeyPressed();
-			SingleLetterText slt;
-			slt.Letter = ch;
-			slt.Rect = { rect.x + 5 + margin, rect.y + 50, 20, 20 };
-			slt.Color = { 0, 0, 0, 255 };
-			text.push_back(slt);
-			margin += 18;
-		}
+		char ch = Input::GetKeyPressed();
+		SingleLetterText slt;
+		slt.Letter = ch;
+		slt.Rect = { rect.x + 5 + margin, rect.y + 50, 20, 20 };
+		slt.Color = { 0, 0, 0, 255 };
+		text.push_back(slt);
+		margin += 18;
 	}
 }
 
-const std::string& Textbox::GetTextAsString()
+std::string Textbox::GetTextAsString()
 {
 	std::string fulltext;
 	for (int i = 0; i < text.size(); i++) {
@@ -42,23 +37,27 @@ const std::string& Textbox::GetTextAsString()
 	return fulltext;
 }
 
+void Textbox::Clear()
+{
+	margin = 0;
+	text.clear();
+}
+
 void Textbox::OnClick()
 {
-	if (Input::MousePressed(MouseButton::LEFT)) {
-		if (Collision::InRect(rect, Input::MouseX(), Input::MouseY())) {
-			std::cout << "InFocus\n";
-			inFocus = true;
-		}
-		else {
-			std::cout << "Not InFocus\n";
-			inFocus = false;
-		}
+	if (Collision::InRect(rect, Input::MouseX(), Input::MouseY())) {
+		std::cout << "InFocus\n";
+		inFocus = true;
+	}
+	else {
+		std::cout << "Not InFocus\n";
+		inFocus = false;
 	}
 }
 
 void Textbox::OnBackSpace()
 {
-	if (Input::KeyPressed(Key::BACKSPACE)) {
+	if (text.size() > 0) {
 		text.pop_back();
 		margin -= 18;
 	}
@@ -66,10 +65,10 @@ void Textbox::OnBackSpace()
 
 void Textbox::OnPaste()
 {
-	if (Input::KeyPressed(Key::LCTRL)) {
+	/*if (Input::KeyPressed(Key::LCTRL)) {
 		char* f = SDL_GetClipboardText();
 		if (f == "") {
 
 		}
-	}
+	}*/
 }

@@ -15,10 +15,12 @@ public:
 	const std::vector<SingleLetterText>& GetText() { return text; }
 	TTF_Font* GetFont() { return font; }
 	SDL_Rect GetRect() { return rect; }
-	const std::string& GetTextAsString();
-private:
+	std::string GetTextAsString();
+	const bool& InFocus() { return inFocus; }
+	void Clear();
 	void OnClick();
 	void OnBackSpace();
+private:
 	void OnPaste();
 private:
 	std::vector<SingleLetterText> text = {};
